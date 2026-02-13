@@ -3,15 +3,21 @@
 import { motion } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { useState } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Contact() {
   const [ref, isInView] = useInView({ threshold: 0.2 });
   const [focused, setFocused] = useState<string | null>(null);
+  const { theme } = useTheme();
 
   return (
     <section id="contact" className="relative py-32 px-6 overflow-hidden" ref={ref}>
-      {/* Dark gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-zinc-950 via-black to-zinc-950" />
+      {/* Background with theme support */}
+      <div className={`absolute inset-0 transition-colors duration-500 ${
+        theme === "dark" 
+          ? "bg-gradient-to-br from-zinc-950 via-black to-zinc-950"
+          : "bg-gradient-to-br from-stone-100 via-emerald-50 to-stone-50"
+      }`} />
       
       {/* Decorative glowing elements */}
       <div className="absolute top-20 right-10 w-72 h-72 bg-emerald-500/20 rounded-full blur-3xl" />
@@ -61,23 +67,27 @@ export default function Contact() {
               </span>
             </h2>
             
-            <p className="text-xl text-stone-300 mb-8 leading-relaxed">
+            <p className={`text-xl mb-8 leading-relaxed transition-colors duration-500 ${
+              theme === "dark" ? "text-white" : "text-stone-800"
+            }`}>
               Ready to cultivate something extraordinary? 
-              Reach out and let's start building your future.
+              Reach out and let's start building your AI future.
             </p>
 
             <div className="space-y-4">
               {[
-                { icon: "📧", text: "hello@dracaenium.com" },
-                { icon: "📍", text: "Growing globally" },
-                { icon: "⏰", text: "24/7 Support" },
+                { icon: "📧", text: "consulting@dracaenium.com" },
+                { icon: "📍", text: "Global AI consulting services" },
+                { icon: "⏰", text: "24/7 Support available" },
               ].map((item, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, x: -20 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ delay: 0.2 + i * 0.1 }}
-                  className="flex items-center gap-3 text-stone-300"
+                  className={`flex items-center gap-3 transition-colors duration-500 ${
+                    theme === "dark" ? "text-white" : "text-stone-800"
+                  }`}
                 >
                   <span className="text-2xl">{item.icon}</span>
                   <span className="text-lg">{item.text}</span>
@@ -92,7 +102,11 @@ export default function Contact() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/10">
+            <div className={`relative backdrop-blur-xl rounded-3xl p-8 shadow-2xl border transition-colors duration-500 ${
+              theme === "dark"
+                ? "bg-white/5 border-white/10"
+                : "bg-white/90 border-stone-200"
+            }`}>
               <form className="space-y-6">
                 <div className="space-y-4">
                   <div className="relative">
@@ -101,7 +115,11 @@ export default function Contact() {
                       placeholder="Your Name"
                       onFocus={() => setFocused('name')}
                       onBlur={() => setFocused(null)}
-                      className="w-full px-6 py-4 rounded-2xl bg-white/5 border-2 border-white/10 focus:border-emerald-500 focus:outline-none transition-all text-white placeholder:text-stone-500"
+                      className={`w-full px-6 py-4 rounded-2xl border-2 focus:outline-none transition-all ${
+                        theme === "dark"
+                          ? "bg-white/5 border-white/10 focus:border-emerald-500 text-white placeholder:text-stone-500"
+                          : "bg-white border-stone-300 focus:border-emerald-500 text-stone-900 placeholder:text-stone-400"
+                      }`}
                     />
                     {focused === 'name' && (
                       <motion.div
@@ -119,7 +137,11 @@ export default function Contact() {
                       placeholder="Your Email"
                       onFocus={() => setFocused('email')}
                       onBlur={() => setFocused(null)}
-                      className="w-full px-6 py-4 rounded-2xl bg-white/5 border-2 border-white/10 focus:border-emerald-500 focus:outline-none transition-all text-white placeholder:text-stone-500"
+                      className={`w-full px-6 py-4 rounded-2xl border-2 focus:outline-none transition-all ${
+                        theme === "dark"
+                          ? "bg-white/5 border-white/10 focus:border-emerald-500 text-white placeholder:text-stone-500"
+                          : "bg-white border-stone-300 focus:border-emerald-500 text-stone-900 placeholder:text-stone-400"
+                      }`}
                     />
                     {focused === 'email' && (
                       <motion.div
@@ -137,7 +159,11 @@ export default function Contact() {
                       rows={5}
                       onFocus={() => setFocused('message')}
                       onBlur={() => setFocused(null)}
-                      className="w-full px-6 py-4 rounded-2xl bg-white/5 border-2 border-white/10 focus:border-emerald-500 focus:outline-none transition-all resize-none text-white placeholder:text-stone-500"
+                      className={`w-full px-6 py-4 rounded-2xl border-2 focus:outline-none transition-all resize-none ${
+                        theme === "dark"
+                          ? "bg-white/5 border-white/10 focus:border-emerald-500 text-white placeholder:text-stone-500"
+                          : "bg-white border-stone-300 focus:border-emerald-500 text-stone-900 placeholder:text-stone-400"
+                      }`}
                     />
                     {focused === 'message' && (
                       <motion.div

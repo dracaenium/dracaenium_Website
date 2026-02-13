@@ -2,9 +2,11 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useMemo } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Hero() {
   const ref = useRef(null);
+  const { theme } = useTheme();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -58,8 +60,10 @@ export default function Hero() {
 
   return (
     <section ref={ref} className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Pure black background with subtle gradients */}
-      <div className="absolute inset-0 bg-black">
+      {/* Background with theme support */}
+      <div className={`absolute inset-0 transition-colors duration-500 ${
+        theme === "dark" ? "bg-black" : "bg-gradient-to-br from-stone-50 via-emerald-50 to-stone-100"
+      }`}>
         <motion.div
           className="absolute inset-0"
           style={{
@@ -162,26 +166,36 @@ export default function Hero() {
             transition={{ duration: 1, delay: 0.2 }}
           >
             <motion.div
-              className="inline-block mb-4 px-4 py-2 bg-nature-600/20 backdrop-blur-sm rounded-full border border-nature-500/30"
+              className={`inline-block mb-4 px-4 py-2 backdrop-blur-sm rounded-full border transition-colors duration-500 ${
+                theme === "dark"
+                  ? "bg-nature-600/20 border-nature-500/30"
+                  : "bg-emerald-100 border-emerald-300"
+              }`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <span className="text-nature-300 text-sm font-medium">Rooted in Innovation</span>
+              <span className={`text-sm font-medium transition-colors duration-500 ${
+                theme === "dark" ? "text-nature-300" : "text-emerald-700"
+              }`}>AI Transformation Experts</span>
             </motion.div>
             
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
               <motion.span 
-                className="bg-clip-text text-transparent"
+                className="bg-clip-text text-transparent inline-block"
                 style={{
-                  backgroundImage: "linear-gradient(120deg, #10b981, #34d399, #5eead4, #2dd4bf, #14b8a6, #10b981)",
-                  backgroundSize: "300% 100%",
+                  backgroundImage: theme === "dark"
+                    ? "linear-gradient(90deg, #10b981 0%, #34d399 25%, #5eead4 50%, #2dd4bf 75%, #10b981 100%)"
+                    : "linear-gradient(90deg, #047857 0%, #059669 25%, #10b981 50%, #059669 75%, #047857 100%)",
+                  backgroundSize: "400% 100%",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
                 }}
                 animate={{
-                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                  backgroundPosition: ["0% 50%", "100% 50%"],
                 }}
                 transition={{
-                  duration: 4,
+                  duration: 8,
                   repeat: Infinity,
                   ease: "linear",
                 }}
@@ -190,28 +204,42 @@ export default function Hero() {
               </motion.span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-stone-300 mb-8 leading-relaxed">
-              Where nature's resilience meets cutting-edge innovation
+            <p className={`text-xl md:text-2xl mb-8 leading-relaxed transition-colors duration-500 ${
+              theme === "dark" ? "text-stone-300" : "text-stone-700"
+            }`}>
+              Empowering enterprises with AI transformation strategies and implementation excellence
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
               <a
                 href="#contact"
-                className="group relative px-8 py-4 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-full font-semibold overflow-hidden"
+                className={`group relative px-8 py-4 text-white rounded-full font-semibold overflow-hidden transition-all duration-300 ${
+                  theme === "dark"
+                    ? "bg-gradient-to-r from-emerald-600 to-teal-600 hover:shadow-emerald-500/50"
+                    : "bg-gradient-to-r from-emerald-700 to-teal-700 hover:shadow-emerald-600/50"
+                } hover:shadow-lg`}
               >
-                <span className="relative z-10">Get Started</span>
+                <span className="relative z-10">Schedule Consultation</span>
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-teal-500"
+                  className={`absolute inset-0 ${
+                    theme === "dark"
+                      ? "bg-gradient-to-r from-emerald-500 to-teal-500"
+                      : "bg-gradient-to-r from-emerald-600 to-teal-600"
+                  }`}
                   initial={{ x: "-100%" }}
                   whileHover={{ x: 0 }}
                   transition={{ duration: 0.3 }}
                 />
               </a>
               <a
-                href="#about"
-                className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white border border-white/20 rounded-full font-semibold hover:bg-white/20 transition-all"
+                href="/docs"
+                className={`px-8 py-4 backdrop-blur-sm rounded-full font-semibold transition-all duration-300 ${
+                  theme === "dark"
+                    ? "bg-white/10 text-white border border-white/20 hover:bg-white/20"
+                    : "bg-white/80 text-stone-700 border border-stone-300 hover:bg-white"
+                }`}
               >
-                Explore More
+                View Documentation
               </a>
             </div>
           </motion.div>
@@ -228,7 +256,7 @@ export default function Hero() {
               {[0, 1, 2, 3].map((i) => (
                 <motion.div
                   key={`orbit-${i}`}
-                  className="absolute"
+                  className="absolute will-change-transform"
                   style={{
                     width: `${180 + i * 40}px`,
                     height: `${180 + i * 40}px`,
@@ -254,7 +282,7 @@ export default function Hero() {
                   {[0, 1, 2].map((j) => (
                     <motion.div
                       key={`circle-${i}-${j}`}
-                      className="absolute top-0 left-1/2 -ml-2 w-4 h-4 rounded-full bg-gradient-to-r from-emerald-400 to-teal-400"
+                      className="absolute top-0 left-1/2 -ml-2 w-4 h-4 rounded-full bg-gradient-to-r from-emerald-400 to-teal-400 will-change-transform"
                       style={{
                         boxShadow: "0 0 20px rgba(52, 211, 153, 0.6)",
                         rotate: `${j * 120}deg`,
@@ -268,6 +296,7 @@ export default function Hero() {
                         duration: 2,
                         repeat: Infinity,
                         delay: j * 0.3,
+                        ease: "easeInOut",
                       }}
                     />
                   ))}
@@ -351,7 +380,7 @@ export default function Hero() {
               {[...Array(8)].map((_, i) => (
                 <motion.div
                   key={`particle-${i}`}
-                  className="absolute w-2 h-2 rounded-full bg-emerald-400/60"
+                  className="absolute w-2 h-2 rounded-full bg-emerald-400/60 will-change-transform"
                   style={{
                     left: "50%",
                     top: "50%",

@@ -8,17 +8,49 @@
     --foreground: 20 14.3% 4.1%;
   }
 
-  body {
-    @apply bg-black text-white;
-  }
-  
   html {
     scroll-behavior: smooth;
+  }
+
+  html[data-theme="dark"] {
+    --bg-primary: 0 0% 0%;
+    --bg-secondary: 240 6% 10%;
+    --text-primary: 0 0% 100%;
+    --text-secondary: 240 5% 65%;
+  }
+
+  html[data-theme="light"] {
+    --bg-primary: 0 0% 98%;
+    --bg-secondary: 0 0% 100%;
+    --text-primary: 240 10% 4%;
+    --text-secondary: 240 4% 46%;
+  }
+
+  body {
+    @apply transition-colors duration-500;
+    background: hsl(var(--bg-primary));
+    color: hsl(var(--text-primary));
   }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  
+  .bg-primary {
+    background: hsl(var(--bg-primary));
+  }
+  
+  .bg-secondary {
+    background: hsl(var(--bg-secondary));
+  }
+  
+  .text-primary {
+    color: hsl(var(--text-primary));
+  }
+  
+  .text-secondary {
+    color: hsl(var(--text-secondary));
   }
 }

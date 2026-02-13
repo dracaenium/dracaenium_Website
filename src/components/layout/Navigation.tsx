@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -18,7 +20,9 @@ export default function Navigation() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
-      className={`fixed top-0 w-full z-50 transition-all duration-300 backdrop-blur-xl shadow-lg bg-transparent`}
+      className={`fixed top-0 w-full z-50 transition-all duration-300 backdrop-blur-xl shadow-lg ${
+        theme === "dark" ? "bg-black/50" : "bg-white/50"
+      }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
@@ -49,24 +53,26 @@ export default function Navigation() {
                 <path 
                   d="M200 406C182 332 196 262 236 212C272 166 320 146 372 142" 
                   fill="none" 
-                  stroke="#ffffff" 
+                  stroke="#ffffff"
                   strokeWidth="16" 
                   strokeLinecap="round" 
                   opacity="0.92"
                 />
               </svg>
             </motion.div>
-            <span className="text-xl font-bold transition-colors text-white">
+            <span className={`text-xl font-bold transition-colors ${theme === "dark" ? "text-white" : "text-stone-900"}`}>
               Dracaenium
             </span>
           </Link>
           
           <div className="hidden md:flex items-center space-x-8">
-            {['About', 'Features', 'Contact'].map((item) => (
+            {['About', 'Features', 'Docs', 'Contact'].map((item) => (
               <Link 
                 key={item}
-                href={`#${item.toLowerCase()}`} 
-                className="relative font-medium transition-colors text-white/90 hover:text-white"
+                href={item === 'Docs' ? '/docs' : `#${item.toLowerCase()}`}
+                className={`relative font-medium transition-colors ${
+                  theme === "dark" ? "text-white/90 hover:text-white" : "text-stone-600 hover:text-stone-900"
+                }`}
               >
                 {item}
                 <motion.span
@@ -76,6 +82,25 @@ export default function Navigation() {
                 />
               </Link>
             ))}
+            
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className={`p-2 rounded-full transition-colors ${
+                theme === "dark" ? "bg-white/10 hover:bg-white/20" : "bg-stone-200 hover:bg-stone-300"
+              }`}
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? (
+                <svg className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clipRule="evenodd" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5 text-stone-700" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                </svg>
+              )}
+            </button>
           </div>
         </div>
       </div>

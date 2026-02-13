@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-black text-stone-300 overflow-hidden border-t border-white/5">
+    <footer className="relative overflow-hidden border-t bg-stone-900 text-stone-300 border-stone-800">
       {/* Decorative gradient */}
       <div className="absolute inset-0 opacity-40">
         <div className="absolute inset-0" style={{
@@ -67,9 +67,9 @@ export default function Footer() {
               </svg>
               <span className="text-2xl font-bold text-white">Dracaenium</span>
             </div>
-            <p className="text-stone-400 mb-6 max-w-md leading-relaxed">
-              Where nature's resilience meets cutting-edge innovation. 
-              Building the future, one solution at a time.
+            <p className={`text-stone-400 mb-6 max-w-md leading-relaxed`}>
+              Empowering enterprises with AI transformation strategies, SSOT architecture, 
+              and rapid prototyping excellence.
             </p>
             <div className="flex gap-4">
               {['Twitter', 'LinkedIn', 'GitHub'].map((social) => (
@@ -86,12 +86,12 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="font-semibold text-white mb-4">Quick Links</h3>
+            <h3 className="font-semibold text-white mb-4">Services</h3>
             <ul className="space-y-3 text-sm">
-              {['About', 'Features', 'Contact'].map((link) => (
+              {['AI Strategy', 'SSOT Architecture', 'Rapid Prototyping', 'Spec-Driven Development'].map((link) => (
                 <li key={link}>
                   <a 
-                    href={`#${link.toLowerCase()}`} 
+                    href="/docs" 
                     className="hover:text-emerald-400 transition-colors inline-flex items-center gap-2"
                   >
                     <span className="text-emerald-500">→</span>
@@ -103,15 +103,15 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="font-semibold text-white mb-4">Connect</h3>
+            <h3 className="font-semibold text-white mb-4">Resources</h3>
             <p className="text-sm text-stone-400 mb-4">
-              Stay rooted in innovation
+              Documentation and guides
             </p>
             <a 
-              href="mailto:hello@dracaenium.com"
+              href="/docs"
               className="text-sm text-emerald-400 hover:text-emerald-300 transition-colors"
             >
-              hello@dracaenium.com
+              View Documentation →
             </a>
           </div>
         </div>
