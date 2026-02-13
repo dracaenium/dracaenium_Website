@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="120 100 280 340" role="img" aria-label="Simple dracaena leaf logo">
+  <defs>
+    <linearGradient id="leaf" x1="0.15" y1="0.2" x2="0.9" y2="0.85">
+      <stop offset="0" stop-color="#2ECC71"/>
+      <stop offset="1" stop-color="#12B3C7"/>
+    </linearGradient>
+  </defs>
+  <!-- simple dracaena-like leaf -->
+  <path d="M170 402C138 350 140 280 170 228C205 168 270 130 340 126C388 124 404 146 404 192C404 270 360 360 294 410C240 450 196 442 170 402 Z" fill="url(#leaf)"/>
+  <!-- single vein -->
+  <path d="M200 406C182 332 196 262 236 212C272 166 320 146 372 142" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="round" opacity="0.92"/>
+</svg>
