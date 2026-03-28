@@ -7,8 +7,8 @@ interface UseInViewOptions {
 
 export function useInView(
   options: UseInViewOptions = {}
-): [React.RefObject<HTMLElement>, boolean] {
-  const ref = useRef<HTMLElement>(null);
+): [React.RefObject<HTMLDivElement>, boolean] {
+  const ref = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
