@@ -6,6 +6,7 @@ import Features from "@/components/sections/Features";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/layout/Footer";
 import Navigation from "@/components/layout/Navigation";
+import FloatingContactButton from "@/components/ui/FloatingContactButton";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <Features />
       <Contact />
       <Footer />
+      <FloatingContactButton />
     </main>
   );
 }
