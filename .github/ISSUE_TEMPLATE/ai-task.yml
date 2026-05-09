@@ -1,0 +1,35 @@
+name: AI implementation task
+description: Create a scoped task that an AI coding agent can implement via PR.
+title: "[AI Task]: "
+labels:
+  - ai-agent
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: Describe the exact behavior, page, workflow, or bug fix expected.
+      placeholder: What should be true after the PR is merged?
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope and constraints
+      description: List files, routes, UX requirements, compatibility constraints, or non-goals.
+      placeholder: Keep this specific enough for an agent to make a small PR.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance checks
+      description: List manual and automated checks the PR must satisfy.
+      value: |
+        - npm run lint
+        - npm run typecheck
+        - npm run build
+        - npm run build:pages
+        - npm run audit
+    validations:
+      required: true

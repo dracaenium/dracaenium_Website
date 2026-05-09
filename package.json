@@ -5,20 +5,26 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:pages": "NEXT_OUTPUT=export next build",
+    "typecheck": "tsc --noEmit",
+    "ci": "npm run lint && npm run typecheck && npm run build && npm run build:pages && npm run audit",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint . --max-warnings=0",
+    "audit": "npm audit --omit=dev --audit-level=high"
   },
   "dependencies": {
-    "next": "14.2.0",
+    "framer-motion": "^11.0.0",
+    "next": "^16.2.6",
     "react": "^18.3.0",
-    "react-dom": "^18.3.0",
-    "framer-motion": "^11.0.0"
+    "react-dom": "^18.3.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.0",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.6",
     "postcss": "^8.4.0",
     "tailwindcss": "^3.4.0",
     "typescript": "^5"

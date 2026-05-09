@@ -59,6 +59,19 @@ npm run build
 npm start
 ```
 
+## AI SDLC and CI/CD
+
+This repository includes GitHub-native automation for AI-assisted delivery:
+
+- PR checks through GitHub Actions (`npm run lint`, `typecheck`, `build`, `build:pages`, and `audit`)
+- GitHub Pages deployment from `main`
+- Copilot cloud agent setup steps
+- Agent instructions in `AGENTS.md` and `.github/copilot-instructions.md`
+- Dependabot PRs with non-major auto-merge after checks pass
+- CodeQL security scanning
+
+See [docs/ai-sdlc.md](docs/ai-sdlc.md) for the operating model and required GitHub repository settings.
+
 ## License
 
 Private

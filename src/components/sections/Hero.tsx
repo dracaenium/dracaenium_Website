@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useMemo } from "react";
+import Link from "next/link";
 import { useTheme } from "@/contexts/ThemeContext";
 
 export default function Hero() {
@@ -231,7 +232,7 @@ export default function Hero() {
                   transition={{ duration: 0.3 }}
                 />
               </a>
-              <a
+              <Link
                 href="/docs"
                 className={`px-8 py-4 backdrop-blur-sm rounded-full font-semibold transition-all duration-300 ${
                   theme === "dark"
@@ -240,7 +241,7 @@ export default function Hero() {
                 }`}
               >
                 View Documentation
-              </a>
+              </Link>
             </div>
           </motion.div>
 

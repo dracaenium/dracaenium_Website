@@ -63,7 +63,7 @@ export default function Contact() {
             
             <h2 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               <span className="bg-gradient-to-r from-emerald-400 via-green-300 to-teal-400 bg-clip-text text-transparent">
-                Let's Grow Together
+                Let&apos;s Grow Together
               </span>
             </h2>
             
@@ -71,7 +71,7 @@ export default function Contact() {
               theme === "dark" ? "text-white" : "text-stone-800"
             }`}>
               Ready to cultivate something extraordinary? 
-              Reach out and let's start building your AI future.
+              Reach out and let&apos;s start building your AI future.
             </p>
 
             <div className="space-y-4">

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -90,13 +91,13 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               {['AI Strategy', 'SSOT Architecture', 'Rapid Prototyping', 'Spec-Driven Development'].map((link) => (
                 <li key={link}>
-                  <a 
-                    href="/docs" 
+                  <Link
+                    href="/docs"
                     className="hover:text-emerald-400 transition-colors inline-flex items-center gap-2"
                   >
                     <span className="text-emerald-500">→</span>
                     {link}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -107,12 +108,12 @@ export default function Footer() {
             <p className="text-sm text-stone-400 mb-4">
               Documentation and guides
             </p>
-            <a 
+            <Link
               href="/docs"
               className="text-sm text-emerald-400 hover:text-emerald-300 transition-colors"
             >
               View Documentation →
-            </a>
+            </Link>
           </div>
         </div>
         
