@@ -2,143 +2,90 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
-import { useTheme } from "@/contexts/ThemeContext";
+
+const relics = [
+  {
+    title: "A Hidden Architecture",
+    description:
+      "Only the outline is visible: an intelligence layer designed to connect scattered signals into a larger pattern.",
+    code: "I",
+  },
+  {
+    title: "Evolution At Scale",
+    description:
+      "The system is being shaped to learn, adapt, and expand without revealing the full mechanism too early.",
+    code: "II",
+  },
+  {
+    title: "Access Before Disclosure",
+    description:
+      "Early observers will see fragments first. The complete form arrives when the constellation is ready.",
+    code: "III",
+  },
+];
 
 export default function About() {
   const [ref, isInView] = useInView({ threshold: 0.2 });
-  const { theme } = useTheme();
-
-  const values = [
-    {
-      title: "AI Strategy",
-      description: "Comprehensive AI roadmaps aligned with business objectives",
-      icon: "🎯",
-      color: "from-emerald-500 to-teal-600",
-    },
-    {
-      title: "SSOT Architecture",
-      description: "Single source of truth for reliable AI systems",
-      icon: "🏗️",
-      color: "from-green-500 to-emerald-600",
-    },
-    {
-      title: "Rapid Prototyping",
-      description: "Transform ideas into working AI prototypes in weeks",
-      icon: "⚡",
-      color: "from-teal-500 to-cyan-600",
-    },
-  ];
 
   return (
-    <section id="about" className="relative py-32 px-6 overflow-hidden" ref={ref}>
-      {/* Background with theme support */}
-      <div className={`absolute inset-0 transition-colors duration-500 ${
-        theme === "dark" 
-          ? "bg-gradient-to-br from-zinc-950 via-black to-zinc-950" 
-          : "bg-gradient-to-br from-stone-100 via-emerald-50 to-stone-50"
-      }`} />
-      <div 
-        className={`absolute inset-0 transition-opacity duration-500 ${
-          theme === "dark" ? "opacity-100" : "opacity-30"
-        }`}
-        style={{ 
-          clipPath: "polygon(0 20%, 100% 0, 100% 100%, 0 100%)",
-          background: theme === "dark" 
-            ? "linear-gradient(to top left, rgba(6, 78, 59, 0.2), transparent)"
-            : "linear-gradient(to top left, rgba(16, 185, 129, 0.1), transparent)"
-        }}
+    <section id="about" className="relative overflow-hidden bg-[#050611] px-6 py-32 text-white" ref={ref}>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(0,213,255,0.12),transparent_30%),radial-gradient(circle_at_82%_20%,rgba(255,208,89,0.10),transparent_26%),linear-gradient(180deg,#02030a,#080817_48%,#02030a)]" />
+      <motion.div
+        className="absolute left-[-10rem] top-20 h-[34rem] w-[34rem] rounded-full border border-cyan-200/10"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
       />
-      
-      {/* Ambient sparkles */}
-      {[...Array(30)].map((_, i) => (
-        <motion.div
-          key={`about-sparkle-${i}`}
-          className="absolute w-1 h-1 bg-emerald-400/40 rounded-full"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            boxShadow: "0 0 4px rgba(16, 185, 129, 0.6)",
-          }}
-          animate={{
-            opacity: [0, 1, 0],
-            scale: [0, 1, 0],
-          }}
-          transition={{
-            duration: 3 + Math.random() * 2,
-            repeat: Infinity,
-            delay: Math.random() * 5,
-          }}
-        />
-      ))}
+      <motion.div
+        className="absolute bottom-[-15rem] right-[-10rem] h-[42rem] w-[42rem] rounded-full border border-violet-200/10"
+        animate={{ rotate: -360 }}
+        transition={{ duration: 72, repeat: Infinity, ease: "linear" }}
+      />
 
-      <div className="relative max-w-7xl mx-auto">
-        {/* Asymmetric layout */}
-        <div className="grid lg:grid-cols-5 gap-12 items-center mb-20">
+      <div className="relative mx-auto max-w-7xl">
+        <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            initial={{ opacity: 0, y: 28 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="lg:col-span-2"
           >
-            <div className="sticky top-32">
-              <motion.div
-                className="inline-block mb-4 px-4 py-2 bg-emerald-500/20 backdrop-blur-sm rounded-full border border-emerald-500/30"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              >
-                <span className="text-emerald-300 text-sm font-medium">Our Philosophy</span>
-              </motion.div>
-              
-              <h2 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                <span className="bg-gradient-to-r from-emerald-400 via-green-300 to-teal-400 bg-clip-text text-transparent">
-                  AI Transformation Excellence
-                </span>
-              </h2>
-              
-              <p className={`text-xl leading-relaxed transition-colors duration-500 ${
-                theme === "dark" ? "text-stone-300" : "text-stone-600"
-              }`}>
-                Like the Dracaena plant that thrives in diverse environments, 
-                we help your organization adapt and grow with AI, providing resilient solutions 
-                that stand the test of time.
-              </p>
-            </div>
+            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.32em] text-cyan-100/70">
+              What can be said
+            </p>
+            <h2 className="text-5xl font-black leading-tight tracking-normal md:text-7xl">
+              A project too large to name plainly.
+            </h2>
           </motion.div>
 
-          <div className="lg:col-span-3 space-y-6">
-            {values.map((item, index) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, x: 50 }}
-                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-                transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
-                className="group relative"
-              >
-                <div className={`flex items-start gap-6 backdrop-blur-xl rounded-3xl p-8 border transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/10 will-change-transform ${
-                  theme === "dark"
-                    ? "bg-white/5 border-white/10 hover:border-emerald-500/50"
-                    : "bg-white/80 border-stone-200 hover:border-emerald-400"
-                }`}>
-                  <div className={`flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center text-3xl transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 shadow-lg`}>
-                    {item.icon}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className={`text-2xl font-bold mb-2 transition-colors duration-500 ${
-                      theme === "dark" ? "text-white" : "text-stone-900"
-                    }`}>
-                      {item.title}
-                    </h3>
-                    <p className={`leading-relaxed transition-colors duration-500 ${
-                      theme === "dark" ? "text-stone-400" : "text-stone-600"
-                    }`}>{item.description}</p>
-                  </div>
-                  
-                  {/* Decorative element */}
-                  <div className={`absolute -right-2 -top-2 w-20 h-20 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-10 rounded-full blur-2xl transition-opacity duration-300`} />
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          <motion.p
+            className="max-w-2xl text-xl leading-9 text-slate-300/80"
+            initial={{ opacity: 0, y: 28 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.1 }}
+          >
+            Dracaenium is not being presented as a finished product, a service menu, or a
+            simple tool. It is a concealed framework for emergence: part archive, part
+            engine, part threshold. More will be revealed when the first phase opens.
+          </motion.p>
+        </div>
+
+        <div className="mt-20 grid gap-5 md:grid-cols-3">
+          {relics.map((item, index) => (
+            <motion.article
+              key={item.title}
+              className="group relative overflow-hidden border border-white/10 bg-white/[0.035] p-7 backdrop-blur-xl transition hover:border-cyan-200/30 hover:bg-white/[0.055]"
+              initial={{ opacity: 0, y: 26 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.18 + index * 0.1 }}
+            >
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-100/45 to-transparent" />
+              <div className="mb-12 flex h-14 w-14 items-center justify-center rounded-full border border-white/15 bg-black/30 text-sm font-semibold text-cyan-100 shadow-[0_0_30px_rgba(103,232,249,0.12)]">
+                {item.code}
+              </div>
+              <h3 className="mb-4 text-2xl font-bold text-white">{item.title}</h3>
+              <p className="leading-7 text-slate-300/75">{item.description}</p>
+              <div className="absolute -bottom-20 -right-20 h-48 w-48 rounded-full bg-cyan-300/10 blur-3xl transition group-hover:bg-violet-300/20" />
+            </motion.article>
+          ))}
         </div>
       </div>
     </section>

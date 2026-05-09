@@ -5,8 +5,8 @@ import "./globals.css";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const metadata: Metadata = {
-  title: "Dracaenium - Where Nature Meets Innovation",
-  description: "Sophisticated solutions inspired by nature's resilience and beauty",
+  title: "Dracaenium - The Veil Is Forming",
+  description: "A concealed system of intelligence, scale, and evolution. Coming soon.",
   icons: {
     icon: [
       { url: `${basePath}/favicon.svg`, type: 'image/svg+xml' },

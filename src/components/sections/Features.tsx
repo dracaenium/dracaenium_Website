@@ -3,167 +3,93 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { useRef } from "react";
-import { useTheme } from "@/contexts/ThemeContext";
+
+const phases = [
+  {
+    title: "Phase Zero",
+    subtitle: "The silence before contact",
+    description: "The first layer remains private while the foundation is aligned.",
+  },
+  {
+    title: "Phase One",
+    subtitle: "Fragments begin to move",
+    description: "Selected signals, artifacts, and invitations appear without revealing the core.",
+  },
+  {
+    title: "Phase Two",
+    subtitle: "The constellation opens",
+    description: "The project begins to show how its pieces evolve into something larger.",
+  },
+  {
+    title: "Phase Three",
+    subtitle: "A new orbit",
+    description: "The public form arrives after the hidden structure has proven itself.",
+  },
+];
 
 export default function Features() {
   const [ref, isInView] = useInView({ threshold: 0.1 });
   const containerRef = useRef(null);
-  const { theme } = useTheme();
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
   });
 
-  const features = [
-    {
-      title: "Enterprise AI Implementation",
-      description: "End-to-end AI solutions from strategy to production deployment across all domains",
-      icon: "🚀",
-      details: ["Strategy & Planning", "Architecture Design", "Production Deployment"],
-    },
-    {
-      title: "Spec-Driven Development",
-      description: "Precision-engineered AI systems built with clear specifications and documentation",
-      icon: "📋",
-      details: ["API Specifications", "Data Models", "Quality Assurance"],
-    },
-    {
-      title: "Domain Expertise",
-      description: "Deep knowledge across finance, healthcare, manufacturing, retail, and technology",
-      icon: "🎓",
-      details: ["Industry Best Practices", "Compliance Ready", "Proven Patterns"],
-    },
-  ];
+  const drift = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
 
   return (
-    <section id="features" ref={containerRef} className="relative py-32 px-6 overflow-hidden">
-      {/* Background with theme support */}
-      <motion.div 
-        className={`absolute inset-0 transition-colors duration-500 ${
-          theme === "dark" ? "bg-black" : "bg-white"
-        }`}
-        style={{
-          opacity: useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1, 0.95]),
-        }}
+    <section id="features" ref={containerRef} className="relative overflow-hidden bg-[#02030a] px-6 py-32 text-white">
+      <motion.div
+        className="absolute inset-x-0 top-0 h-[38rem] bg-[radial-gradient(ellipse_at_center,rgba(129,92,255,0.20),transparent_62%)]"
+        style={{ y: drift }}
       />
-      
-      {/* Mesh gradient overlay */}
-      <div className={`absolute inset-0 transition-opacity duration-500 ${
-        theme === "dark" ? "opacity-40" : "opacity-20"
-      }`}>
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.2) 0%, transparent 50%),
-                           radial-gradient(circle at 80% 80%, rgba(20, 184, 166, 0.2) 0%, transparent 50%)`
-        }} />
-      </div>
-      
-      {/* Floating sparkles - only in dark mode */}
-      {theme === "dark" && [...Array(50)].map((_, i) => (
-        <motion.div
-          key={`feature-sparkle-${i}`}
-          className="absolute w-1 h-1 bg-white rounded-full"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            boxShadow: "0 0 4px rgba(255, 255, 255, 0.8)",
-          }}
-          animate={{
-            opacity: [0, 1, 0],
-            scale: [0, 1, 0],
-          }}
-          transition={{
-            duration: 2 + Math.random() * 3,
-            repeat: Infinity,
-            delay: Math.random() * 5,
-          }}
-        />
-      ))}
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:72px_72px] opacity-20" />
 
-      <div ref={ref} className="relative max-w-7xl mx-auto">
+      <div ref={ref} className="relative mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          className="mb-20 max-w-3xl"
         >
-          <motion.div
-            className="inline-block mb-4 px-4 py-2 bg-emerald-500/20 backdrop-blur-sm rounded-full border border-emerald-400/30"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          >
-            <span className="text-emerald-300 text-sm font-medium">What We Offer</span>
-          </motion.div>
-          
-          <h2 className={`text-5xl lg:text-6xl font-bold mb-6 transition-colors duration-500 ${
-            theme === "dark" ? "text-white" : "text-stone-900"
-          }`}>
-            Grow Beyond Limits
+          <p className="mb-5 text-xs font-semibold uppercase tracking-[0.32em] text-violet-100/70">
+            Coming soon
+          </p>
+          <h2 className="text-5xl font-black leading-tight tracking-normal md:text-7xl">
+            Revelation will happen in phases.
           </h2>
-          <p className={`text-xl max-w-3xl mx-auto transition-colors duration-500 ${
-            theme === "dark" ? "text-stone-300" : "text-stone-600"
-          }`}>
-            Our solutions are designed to scale seamlessly, adapting to your evolving requirements
+          <p className="mt-7 text-xl leading-8 text-slate-300/80">
+            No full explanation. No crowded roadmap. Only the visible arc of a larger
+            evolution, released when each layer becomes stable enough to be seen.
           </p>
         </motion.div>
 
-        {/* Bento-style grid layout */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <div
-              key={feature.title}
-              className={`group relative ${index === 0 ? 'lg:col-span-2 lg:row-span-2' : ''}`}
-            >
-              <div className={`relative h-full backdrop-blur-xl rounded-3xl p-8 border transition-all duration-500 ease-out overflow-hidden ${
-                theme === "dark"
-                  ? "bg-gradient-to-br from-white/10 to-white/5 border-white/10 hover:border-emerald-400/50"
-                  : "bg-white border-stone-200 hover:border-emerald-400 shadow-lg"
-              } ${index === 0 ? 'lg:col-span-2 lg:row-span-2' : ''}`}>
-                {/* Hover glow effect */}
-                <div className={`absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/10 group-hover:to-teal-500/10 transition-all duration-500`} />
-                
-                <div className="relative z-10">
-                  <div
-                    className={`text-6xl mb-6 transition-colors duration-500 ${
-                      theme === "dark" ? "text-emerald-400" : "text-emerald-600"
-                    }`}
-                  >
-                    {feature.icon}
-                  </div>
-                  
-                  <h3 className={`text-3xl font-bold mb-4 transition-colors duration-500 ${
-                    theme === "dark" ? "text-white" : "text-stone-900"
-                  }`}>
-                    {feature.title}
-                  </h3>
-                  
-                  <p className={`mb-6 leading-relaxed transition-colors duration-500 ${
-                    theme === "dark" ? "text-stone-300" : "text-stone-600"
-                  }`}>
-                    {feature.description}
-                  </p>
-                  
-                  <div className="flex flex-wrap gap-2">
-                    {feature.details.map((detail, i) => (
-                      <span
-                        key={i}
-                        className={`px-3 py-1 rounded-full text-sm border transition-colors duration-500 ${
-                          theme === "dark"
-                            ? "bg-emerald-500/20 text-emerald-300 border-emerald-400/30"
-                            : "bg-emerald-50 text-emerald-700 border-emerald-200"
-                        }`}
-                      >
-                        {detail}
-                      </span>
-                    ))}
-                  </div>
+        <div className="relative">
+          <div className="absolute left-4 top-0 hidden h-full w-px bg-gradient-to-b from-cyan-200/0 via-cyan-200/35 to-cyan-200/0 md:block" />
+          <div className="grid gap-5">
+            {phases.map((phase, index) => (
+              <motion.article
+                key={phase.title}
+                className="relative grid gap-6 border border-white/10 bg-white/[0.035] p-6 backdrop-blur-xl md:grid-cols-[8rem_1fr_1.1fr] md:items-center md:pl-12"
+                initial={{ opacity: 0, x: index % 2 === 0 ? -28 : 28 }}
+                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.7, delay: index * 0.1 }}
+              >
+                <span className="absolute left-4 top-8 hidden h-3 w-3 rounded-full bg-cyan-100 shadow-[0_0_22px_rgba(103,232,249,0.8)] md:block" />
+                <div className="text-sm font-semibold uppercase tracking-[0.28em] text-cyan-100/70">
+                  {String(index + 1).padStart(2, "0")}
                 </div>
-
-                {/* Decorative corner element */}
-                <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700" />
-              </div>
-            </div>
-          ))}
+                <div>
+                  <h3 className="text-2xl font-bold text-white">{phase.title}</h3>
+                  <p className="mt-2 text-sm uppercase tracking-[0.2em] text-violet-100/55">
+                    {phase.subtitle}
+                  </p>
+                </div>
+                <p className="leading-7 text-slate-300/75">{phase.description}</p>
+              </motion.article>
+            ))}
+          </div>
         </div>
       </div>
     </section>
