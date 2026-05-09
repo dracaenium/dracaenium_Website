@@ -1,0 +1,107 @@
+name: AI PR Review
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+  workflow_dispatch:
+
+concurrency:
+  group: ai-pr-review-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: write
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  analyze:
+    name: Analyze Pull Request
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Prepare PR context
+        run: |
+          mkdir -p .ai
+          git diff --stat "origin/${{ github.base_ref }}...HEAD" > .ai/pr-diff-stat.txt
+          git diff --unified=80 "origin/${{ github.base_ref }}...HEAD" -- \
+            ':!package-lock.json' \
+            ':!*.svg' \
+            ':!*.png' \
+            ':!*.jpg' \
+            ':!*.jpeg' \
+            ':!*.webp' > .ai/pr-diff.patch
+
+      - name: Lint
+        id: lint
+        continue-on-error: true
+        run: npm run lint
+
+      - name: Typecheck
+        id: typecheck
+        continue-on-error: true
+        run: npm run typecheck
+
+      - name: Test
+        id: test
+        continue-on-error: true
+        run: npm test
+
+      - name: Build server target
+        id: build
+        continue-on-error: true
+        run: npm run build
+
+      - name: Build GitHub Pages export
+        id: pages_build
+        continue-on-error: true
+        run: npm run build:pages
+
+      - name: Audit production dependencies
+        id: audit
+        continue-on-error: true
+        run: npm run audit
+
+      - name: Post AI review
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_PR_REVIEW_MODEL || 'gpt-4.1-mini' }}
+          LINT_STATUS: ${{ steps.lint.outcome }}
+          TYPECHECK_STATUS: ${{ steps.typecheck.outcome }}
+          TEST_STATUS: ${{ steps.test.outcome }}
+          BUILD_STATUS: ${{ steps.build.outcome }}
+          PAGES_BUILD_STATUS: ${{ steps.pages_build.outcome }}
+          AUDIT_STATUS: ${{ steps.audit.outcome }}
+        run: node scripts/ai-pr-review.mjs
+
+      - name: Fail on required check failure
+        if: |
+          steps.lint.outcome != 'success' ||
+          steps.typecheck.outcome != 'success' ||
+          steps.test.outcome != 'success' ||
+          steps.build.outcome != 'success' ||
+          steps.pages_build.outcome != 'success' ||
+          steps.audit.outcome != 'success'
+        run: exit 1

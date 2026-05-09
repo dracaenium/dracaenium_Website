@@ -17,6 +17,7 @@ Run these before opening or updating a PR:
 ```bash
 npm run lint
 npm run typecheck
+npm test
 npm run build
 npm run build:pages
 npm run audit
@@ -30,6 +31,7 @@ Use `npm ci` in clean automation environments.
 - Do not commit generated build output from `.next/` or `out/`.
 - Do not edit secrets or `.env*.local` files.
 - Prefer small, reviewable PRs with a clear summary and verification notes.
+- Add or update tests for changed behavior and run `npm test`.
 - If a change affects routing or static rendering, verify `npm run build:pages`.
 - If dependencies change, update `package-lock.json` with npm.
 

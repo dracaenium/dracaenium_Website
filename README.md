@@ -63,7 +63,8 @@ npm start
 
 This repository includes GitHub-native automation for AI-assisted delivery:
 
-- PR checks through GitHub Actions (`npm run lint`, `typecheck`, `build`, `build:pages`, and `audit`)
+- PR checks through GitHub Actions (`npm run lint`, `typecheck`, `test`, `build`, `build:pages`, and `audit`)
+- Automated PR analysis comments for agents and optional model-backed AI review
 - GitHub Pages deployment from `main`
 - Copilot cloud agent setup steps
 - Agent instructions in `AGENTS.md` and `.github/copilot-instructions.md`
